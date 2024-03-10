@@ -3,18 +3,25 @@ import './App.css';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const[paragraftGoster, paragraftIslem]=useState(true)
-  const[sayac, sayacGuncelle] = useState(0)
+  const[data, setData] =useState([]);
+  
+  useEffect(()=>{
+ async function fetchData(){
+  const response = await fetch('https://jsonplaceholder.org/users')
+  const jsObjectData = await response.json();
+  setData(jsObjectData);
+ }
 
-  useEffect( ()=> {console.log("1. efect çalıştı");},[] )
+
+ setTimeout(fetchData, 2000)
 
 
-   useEffect(()=>{console.log("2. efect calıştı");})
- 
+  },[])
+ console.log(data);
   return (
     <>
-     sayac:{sayac}
-     
+    {data.length=== 0 &&<p>YÜKLENİYOR...</p>}
+     { data.map(   kisi =><p key={kisi.id}>{kisi.firstname}</p>)        }
     </>
   );
 }
